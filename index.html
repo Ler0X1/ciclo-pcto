@@ -82,6 +82,8 @@ h2{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.08e
 .seg{height:8px;background:var(--line);border-radius:4px;overflow:hidden}
 .seg i{display:block;height:100%;width:0;background:var(--accent)}
 .seg-labels{display:flex;gap:4px;font-size:12px;color:var(--muted)}
+.seg-labels span{display:flex;min-width:0;white-space:nowrap}
+.seg-labels span:last-child{justify-content:flex-end}
 .tbtns{display:flex;gap:8px}
 
 .btn{border:1px solid var(--line);background:transparent;border-radius:8px;padding:9px 14px;font-weight:600;min-height:42px}
@@ -183,6 +185,10 @@ h2{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.08e
 /* --g: cor da listra; --gt: versão legível para texto e barras; --ge: contorno do marcador; --gl: fio ao lado da listra */
 [data-g="jur"]{--g:var(--esp);--gt:var(--esp);--ge:var(--esp);--gl:var(--esp)}
 [data-g="bas"]{--g:var(--norm);--gt:var(--ink);--ge:var(--muted);--gl:var(--line)}
+
+.install{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--btn-bg);color:var(--btn-ink);border-radius:10px;padding:10px 10px 10px 16px;font-weight:600}
+.install[hidden]{display:none}
+.install .btn{background:var(--btn-ink);color:var(--btn-bg);border-color:var(--btn-ink);min-height:38px;padding:6px 16px}
 </style>
 </head>
 <body>
@@ -191,6 +197,7 @@ h2{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.08e
     <div class="brand">Ciclo PC-TO<span>Oficial Investigador</span></div>
     <span class="sync" id="sync" data-s="local">Salvo neste aparelho</span>
   </header>
+  <div class="install" id="install" hidden><span>Instale o app no celular</span><button class="btn" id="installBtn" type="button">Instalar</button></div>
   <main id="app"></main>
 </div>
 <nav class="tabs" aria-label="Seções"><div id="tabs"></div></nav>
@@ -554,6 +561,16 @@ render(); ligarTick(); ligarConta();
 })();
 </script>
 <script>
+(function(){
+  var pedido=null, caixa=document.getElementById('install');
+  window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); pedido=e; caixa.hidden=false; });
+  document.getElementById('installBtn').addEventListener('click', function(){
+    if(!pedido) return;
+    pedido.prompt();
+    pedido.userChoice.then(function(){ pedido=null; caixa.hidden=true; });
+  });
+  window.addEventListener('appinstalled', function(){ pedido=null; caixa.hidden=true; });
+})();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
 }
