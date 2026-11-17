@@ -1,5 +1,5 @@
 /* Ciclo PC-TO: funciona offline e pega a versão nova sempre que houver internet. */
-var CACHE = 'ciclo-pcto-29d9bbb634';
+var CACHE = 'ciclo-pcto-cebraspe-1';
 var SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png'];
 self.addEventListener('install', function(e){
   e.waitUntil(caches.open(CACHE).then(function(c){ return c.addAll(SHELL); }).then(function(){ return self.skipWaiting(); }));

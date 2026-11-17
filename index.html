@@ -186,6 +186,12 @@ h2{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.08e
 [data-g="jur"]{--g:var(--esp);--gt:var(--esp);--ge:var(--esp);--gl:var(--esp)}
 [data-g="bas"]{--g:var(--norm);--gt:var(--ink);--ge:var(--muted);--gl:var(--line)}
 
+.stars{color:var(--accent);letter-spacing:1px;font-size:.92em;white-space:nowrap;font-weight:400;text-decoration:none;display:inline-block}
+.topic .stars{font-size:16px}
+.what .stars,.items .stars{display:inline-block;color:var(--accent);font-size:13px;margin-top:2px}
+.items .ck .stars{opacity:.55}
+.note{margin:0;font-size:14.5px;color:var(--muted)}
+.note.legend{margin-top:12px;display:flex;gap:8px;align-items:center}
 .install{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--btn-bg);color:var(--btn-ink);border-radius:10px;padding:10px 10px 10px 16px;font-weight:600}
 .install[hidden]{display:none}
 .install .btn{background:var(--btn-ink);color:var(--btn-bg);border-color:var(--btn-ink);min-height:38px;padding:6px 16px}
@@ -209,55 +215,60 @@ h2{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.08e
 /* ---------- Dados do ciclo ---------- */
 var SUBJ = [
   {id:'pp', nome:'Processo Penal', g:'jur', p:1, itens:[
-    ['pp1','Inquérito policial'],['pp2','Princípios e aplicação da lei processual penal'],
-    ['pp3','Provas e cadeia de custódia'],['pp4','Prisões e medidas cautelares'],
-    ['pp5','Ação penal e ANPP'],['pp6','Busca e apreensão'],['pp7','Competência'],['pp8','Procedimentos']]},
+    ['pp1','Inquérito policial',5],['pp2','Princípios e aplicação da lei processual penal',2],
+    ['pp3','Provas e cadeia de custódia',5],['pp6','Busca e apreensão',4],
+    ['pp4','Prisões (foco no flagrante) e medidas cautelares',5],['pp5','Ação penal e ANPP',3],
+    ['pp7','Competência',2],['pp8','Procedimentos e JECrim',2]]},
   {id:'dp', nome:'Direito Penal', g:'jur', p:1, itens:[
-    ['dp1','Fato típico, dolo e culpa'],['dp2','Ilicitude e excludentes'],['dp3','Culpabilidade e erro'],
-    ['dp4','Tentativa, consumação, desistência e arrependimento'],['dp5','Concurso de pessoas'],
-    ['dp6','Crimes contra a pessoa'],['dp7','Crimes contra o patrimônio'],['dp8','Crimes contra a dignidade sexual'],
-    ['dp9','Aplicação da lei penal, penas e extinção da punibilidade'],['dp10','Crimes contra a Administração Pública']]},
+    ['dp1','Fato típico, dolo e culpa',5],['dp2','Ilicitude e excludentes',4],
+    ['dp3','Culpabilidade, imputabilidade e erro',4],
+    ['dp4','Tentativa, consumação, desistência e arrependimento',4],['dp5','Concurso de pessoas',4],
+    ['dp7','Crimes contra o patrimônio',5],['dp10','Crimes contra a Administração Pública',5],
+    ['dp6','Crimes contra a pessoa',4],['dp9','Penas, prescrição e extinção da punibilidade',3],
+    ['dp11','Aplicação da lei penal (tempo e espaço)',2],['dp8','Crimes contra a dignidade sexual',3]]},
   {id:'pt', nome:'Língua Portuguesa', g:'bas', p:1, itens:[
-    ['pt1','Interpretação de texto'],['pt2','Coesão e coerência'],['pt3','Sintaxe'],['pt4','Pontuação'],
-    ['pt5','Concordância'],['pt6','Regência e crase'],['pt7','Período composto'],['pt8','Pronomes'],
-    ['pt9','Semântica e ortografia']]},
+    ['pt1','Interpretação de texto',5],['pt10','Reescrita de frases (substituição de palavras e trechos)',5],
+    ['pt3','Sintaxe',4],['pt4','Pontuação',4],['pt2','Coesão (retomada de termos e pronomes) e coerência',4],
+    ['pt5','Concordância',3],['pt6','Regência e crase',3],['pt7','Período composto',3],
+    ['pt8','Classes de palavras e pronomes',2],['pt9','Semântica e ortografia',2]]},
   {id:'dc', nome:'Direito Constitucional', g:'jur', p:2, itens:[
-    ['dc1','Direitos e garantias fundamentais (art. 5º)'],['dc2','Segurança pública (art. 144)'],['dc3','Remédios constitucionais'],
-    ['dc4','Direitos sociais, nacionalidade e direitos políticos'],['dc5','Administração pública (arts. 37 a 41)'],
-    ['dc6','Organização do Estado'],['dc7','Poderes']]},
+    ['dc1','Direitos e garantias fundamentais (art. 5º)',5],['dc2','Segurança pública (art. 144)',5],
+    ['dc5','Administração pública (arts. 37 a 41)',4],['dc3','Remédios constitucionais',3],
+    ['dc4','Direitos sociais, nacionalidade e direitos políticos',2],['dc6','Organização do Estado',2],['dc7','Poderes',2]]},
   {id:'lpe', nome:'Legislação Penal Especial', g:'jur', p:1, itens:[
-    ['lpe1','Lei de Drogas (11.343/2006)'],['lpe2','Organizações Criminosas (12.850/2013)'],['lpe3','Abuso de Autoridade (13.869/2019)'],
-    ['lpe4','Estatuto do Desarmamento (10.826/2003)'],['lpe5','Maria da Penha (11.340/2006)'],['lpe6','Crimes Hediondos e Tortura'],
-    ['lpe7','Interceptação Telefônica (9.296/1996)'],['lpe8','ECA (ato infracional)'],['lpe9','Juizados Especiais Criminais (9.099/1995)'],
-    ['lpe10','Crimes de trânsito']]},
+    ['lpe1','Lei de Drogas (11.343/2006)',5],['lpe4','Estatuto do Desarmamento (10.826/2003)',5],
+    ['lpe5','Maria da Penha (11.340/2006)',5],['lpe2','Organizações Criminosas (12.850/2013)',4],
+    ['lpe3','Abuso de Autoridade (13.869/2019)',4],['lpe6','Crimes Hediondos e Tortura',3],
+    ['lpe7','Interceptação Telefônica (9.296/1996)',3],['lpe8','ECA (ato infracional)',2],
+    ['lpe9','Juizados Especiais Criminais (9.099/1995)',2],['lpe10','Crimes de trânsito',2]]},
   {id:'inf', nome:'Informática', g:'bas', p:2, itens:[
-    ['inf1','Segurança da informação'],['inf2','Internet e e-mail'],['inf3','Windows'],['inf4','Word'],
-    ['inf5','Excel'],['inf6','Redes e nuvem']]},
-  {id:'adm', nome:'Direito Administrativo', g:'jur', p:3, itens:[
-    ['adm1','Princípios e organização administrativa'],['adm2','Poderes administrativos e poder de polícia'],
-    ['adm3','Atos administrativos'],['adm4','Agentes públicos'],['adm5','Responsabilidade civil do Estado'],
-    ['adm6','Improbidade administrativa'],['adm7','Controle e noções de licitação']]},
+    ['inf1','Segurança da informação',5],['inf2','Internet, navegadores e e-mail',4],['inf6','Redes e computação em nuvem',4],
+    ['inf3','Windows e Linux',3],['inf5','Excel',3],['inf4','Word',2]]},
+  {id:'adm', nome:'Direito Administrativo', g:'jur', p:2, itens:[
+    ['adm1','Princípios e organização administrativa',3],['adm2','Poderes administrativos e poder de polícia',5],
+    ['adm3','Atos administrativos',4],['adm4','Agentes públicos',3],['adm5','Responsabilidade civil do Estado',4],
+    ['adm6','Improbidade administrativa',4],['adm7','Controle e noções de licitação',2]]},
   {id:'rl', nome:'Raciocínio Lógico', g:'bas', p:3, itens:[
-    ['rl1','Proposições e conectivos'],['rl2','Negações e equivalências'],['rl3','Diagramas lógicos'],
-    ['rl4','Argumentação'],['rl5','Porcentagem e proporção'],['rl6','Sequências'],['rl7','Probabilidade']]},
+    ['rl1','Proposições e conectivos',4],['rl2','Negações e equivalências',4],['rl3','Diagramas lógicos',3],
+    ['rl4','Argumentação',3],['rl5','Porcentagem e proporção',3],['rl6','Sequências',2],['rl7','Probabilidade',2]]},
   {id:'lpc', nome:'Legislação PC-TO', g:'jur', p:3, itens:[
-    ['lpc1','Lei Orgânica Nacional das Polícias Civis (14.735/2023)'],
-    ['lpc2','Carreira de Oficial Investigador (Lei estadual 4.653/2025)'],
-    ['lpc3','Estatuto e regime disciplinar da PC-TO']]},
+    ['lpc1','Lei Orgânica Nacional das Polícias Civis (14.735/2023)',4],
+    ['lpc2','Carreira de Oficial Investigador (Lei estadual 4.653/2025)',3],
+    ['lpc3','Estatuto e regime disciplinar da PC-TO',4]]},
   {id:'dh', nome:'Direitos Humanos', g:'jur', p:3, itens:[
-    ['dh1','Teoria geral e DUDH'],['dh2','Tratados na CF (art. 5º, §§ 2º a 4º)'],['dh3','Pacto de San José'],
-    ['dh4','Sistema interamericano'],['dh5','Uso da força (Lei 13.060/2014)']]},
+    ['dh1','Teoria geral e DUDH',4],['dh2','Tratados na CF (art. 5º, §§ 2º a 4º)',3],['dh3','Pacto de San José',4],
+    ['dh4','Sistema interamericano',3],['dh5','Uso da força (Lei 13.060/2014)',3]]},
   {id:'cr', nome:'Conhecimentos Regionais', g:'bas', p:3, itens:[
-    ['cr1','História e criação do Tocantins'],['cr2','Geografia'],['cr3','Economia'],
-    ['cr4','Política e municípios'],['cr5','Cultura e povos']]}
+    ['cr1','História e criação do Tocantins',4],['cr2','Geografia',4],['cr3','Economia',3],
+    ['cr4','Política e municípios',2],['cr5','Cultura e povos',2]]}
 ];
 var CICLO = ['pp','dp','pt','dc','lpe','inf','adm','dp','pt','pp','rl','lpc','dh','cr'];
 var FASES = [['Teoria',30],['Questões',20],['Correção',10]];
 var N = CICLO.length, TOTAL = 60*60000, MIN_Q = 15;
 var GRUPO = {jur:'Específica', bas:'Básica'};
 var PRIO = {1:'Dominar', 2:'Muito importante', 3:'Complementar'};
-var S = {}, NOME = {};
-SUBJ.forEach(function(s){ S[s.id]=s; s.itens.forEach(function(it){ NOME[it[0]]=it[1]; }); });
+var S = {}, NOME = {}, EST = {};
+SUBJ.forEach(function(s){ S[s.id]=s; s.itens.forEach(function(it){ NOME[it[0]]=it[1]; EST[it[0]]=it[2]||0; }); });
 
 /* ---------- Estado ---------- */
 var KEY='ciclo-pcto-v1', TKEY='ciclo-pcto-timer', UKEY='ciclo-pcto-aba';
@@ -337,6 +348,8 @@ function pintarTimer(){
 /* ---------- Telas ---------- */
 function esc(s){ return String(s).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
 function nomeItem(it){ return it ? it[1] : 'Revisão geral e questões'; }
+/* Importância do conteúdo para a prova (1 a 5), conforme a cobrança do Cebraspe em provas policiais. */
+function stars(n){ if(!n) return ''; var t=''; for(var i=1;i<=5;i++) t+=(i<=n?'★':'☆'); return '<span class="stars" role="img" aria-label="Importância '+n+' de 5">'+t+'</span>'; }
 
 function telaHoje(){
   var sid=CICLO[state.pos], s=S[sid], it=proximo(sid,0);
@@ -360,7 +373,7 @@ function telaHoje(){
   h+='<section class="card now" data-g="'+s.g+'">';
   h+='<div><div class="eyebrow">Bloco '+(state.pos+1)+' de '+N+' · Volta '+state.volta+' <span class="chip">'+GRUPO[s.g]+'</span><span class="chip p'+s.p+'">'+PRIO[s.p]+'</span></div>';
   h+='<h1>'+esc(s.nome)+'</h1></div>';
-  h+='<p class="topic">'+esc(nomeItem(it))+'<small>'+(it ? 'Conteúdo '+idx+' de '+s.itens.length+' da matéria' : 'Todos os conteúdos desta matéria já foram vistos')+'</small></p>';
+  h+='<p class="topic">'+esc(nomeItem(it))+(it?' '+stars(it[2]):'')+'<small>'+(it ? 'Conteúdo '+idx+' de '+s.itens.length+' da matéria' : 'Todos os conteúdos desta matéria já foram vistos')+'</small></p>';
   h+='<div class="timer"><div class="timer-row"><div><div class="clock" id="clock">60:00</div><div class="phase" id="phase"></div></div>';
   h+='<div class="tbtns"><button class="btn" data-act="timer">'+(timer.run?'Pausar':(decorrido()>0&&decorrido()<TOTAL?'Continuar':'Iniciar 60 min'))+'</button>';
   if(decorrido()>0) h+='<button class="btn ghost" data-act="timer-zerar">Zerar</button>';
@@ -391,7 +404,7 @@ function telaHoje(){
   h+='<section class="card"><h2>Em seguida</h2><ol class="list">';
   for(var d=1; d<=3; d++){
     var i=(state.pos+d)%N, s2=S[CICLO[i]];
-    h+='<li data-g="'+s2.g+'"><span class="num">'+(i+1)+'</span><span class="dot"></span><span class="what"><b>'+esc(s2.nome)+'</b><span>'+esc(nomeItem(previsto(d)))+'</span></span></li>';
+    h+='<li data-g="'+s2.g+'"><span class="num">'+(i+1)+'</span><span class="dot"></span><span class="what"><b>'+esc(s2.nome)+'</b><span>'+esc(nomeItem(previsto(d)))+(previsto(d)?' '+stars(previsto(d)[2]):'')+'</span></span></li>';
   }
   h+='</ol></section>';
 
@@ -401,17 +414,19 @@ function telaHoje(){
 function telaCiclo(){
   var h='<section class="card"><h2>Volta '+state.volta+' · 1 bloco = 1 hora</h2><div class="rows">';
   for(var i=0;i<N;i++){
-    var s=S[CICLO[i]], cls=i<state.pos?'done':(i===state.pos?'cur':''), sub, st;
+    var s=S[CICLO[i]], cls=i<state.pos?'done':(i===state.pos?'cur':''), sub, st, subSt=0;
     if(i<state.pos){
       var reg=null; state.log.forEach(function(e){ if(e.v===state.volta && e.b===i) reg=e; });
       sub = reg ? (reg.c && NOME[reg.c] ? NOME[reg.c] : 'Revisão geral e questões') : 'Feito';
       st='Feito';
     } else {
-      sub = nomeItem(previsto(i-state.pos));
+      var pv=previsto(i-state.pos);
+      sub = nomeItem(pv);
+      if(pv) subSt=pv[2];
       st = i===state.pos ? 'Agora' : '';
     }
     h+='<div><button class="row '+cls+'" data-g="'+s.g+'" data-act="sel" data-i="'+i+'" aria-expanded="'+(ui.sel===i)+'">';
-    h+='<span class="num">'+(i+1)+'</span><span class="dot"></span><span class="what"><b>'+esc(s.nome)+'</b><span>'+esc(sub)+'</span></span><span class="state">'+st+'</span></button>';
+    h+='<span class="num">'+(i+1)+'</span><span class="dot"></span><span class="what"><b>'+esc(s.nome)+'</b><span>'+esc(sub)+(subSt?' '+stars(subSt):'')+'</span></span><span class="state">'+st+'</span></button>';
     if(ui.sel===i && i!==state.pos) h+='<div class="rowact"><button class="btn" data-act="ir" data-i="'+i+'">Continuar o ciclo a partir daqui</button></div>';
     h+='</div>';
   }
@@ -421,11 +436,12 @@ function telaCiclo(){
 }
 
 function telaMaterias(){
-  var h='<section class="card"><h2>Prioridade</h2><dl class="prio">'
+  var h='<section class="card"><h2>Banca: Cebraspe</h2><p class="note">Contrato assinado em 16/11/2026. Referência mais próxima: Oficial Investigador PC-MA 2026, também do Cebraspe, com múltipla escolha (A a E), sem desconto por erro, e redação de até 30 linhas. O formato da PC-TO só será confirmado no edital.</p></section>'
+    +'<section class="card"><h2>Prioridade</h2><dl class="prio">'
     +'<div><dt>Dominar</dt><dd>Direito Penal, Processo Penal, Legislação Penal Especial e Português.</dd></div>'
-    +'<div><dt>Muito importantes</dt><dd>Informática e Constitucional (art. 5º e art. 144).</dd></div>'
-    +'<div><dt>Complementares</dt><dd>Direitos Humanos, Legislação PC-TO, Conhecimentos Regionais, Administrativo e Raciocínio Lógico (este não caiu em 2014).</dd></div>'
-    +'</dl></section>';
+    +'<div><dt>Muito importantes</dt><dd>Informática, Constitucional e Administrativo.</dd></div>'
+    +'<div><dt>Complementares</dt><dd>Direitos Humanos, Legislação PC-TO, Conhecimentos Regionais e Raciocínio Lógico.</dd></div>'
+    +'</dl><p class="note legend">'+stars(5)+' importância do conteúdo para a prova, de 1 a 5</p></section>';
   SUBJ.forEach(function(s){
     var f=feitosDe(s.id), t=s.itens.length, ac=acertos(s.id), prox=proximo(s.id,0), aberta=ui.aberta===s.id;
     h+='<section class="card subj" data-g="'+s.g+'"><button class="subj-head" data-act="abre" data-s="'+s.id+'" aria-expanded="'+aberta+'">';
@@ -435,7 +451,7 @@ function telaMaterias(){
       h+='<ul class="items">';
       s.itens.forEach(function(it){
         var ok=!!state.feitos[it[0]];
-        h+='<li><label class="'+(ok?'ck':'')+'" for="c-'+it[0]+'"><input type="checkbox" id="c-'+it[0]+'" data-item="'+it[0]+'"'+(ok?' checked':'')+'><span class="t">'+esc(it[1])+'</span>'+(prox && prox[0]===it[0] ? '<span class="next">próximo</span>' : '')+'</label></li>';
+        h+='<li><label class="'+(ok?'ck':'')+'" for="c-'+it[0]+'"><input type="checkbox" id="c-'+it[0]+'" data-item="'+it[0]+'"'+(ok?' checked':'')+'><span class="t">'+esc(it[1])+'<br>'+stars(it[2])+'</span>'+(prox && prox[0]===it[0] ? '<span class="next">próximo</span>' : '')+'</label></li>';
       });
       h+='</ul>';
     }
