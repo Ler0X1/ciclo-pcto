@@ -248,6 +248,17 @@ var SUBJ = [
     ['adm1','Princípios e organização administrativa',3],['adm2','Poderes administrativos e poder de polícia',5],
     ['adm3','Atos administrativos',4],['adm4','Agentes públicos',3],['adm5','Responsabilidade civil do Estado',4],
     ['adm6','Improbidade administrativa',4],['adm7','Controle e noções de licitação',2]]},
+  {id:'ct', nome:'Contabilidade', g:'bas', p:2, itens:[
+    ['ct1','Conceitos, objetivos e patrimônio (equação patrimonial)',5],['ct2','Atos e fatos administrativos',4],
+    ['ct3','Contas, plano de contas, débito e crédito',4],['ct4','Escrituração e lançamentos; regimes de caixa e competência',5],
+    ['ct5','Operações contábeis (compras, vendas, juros, depreciação, provisões)',3],['ct6','Balancete de verificação',3],
+    ['ct7','Balanço patrimonial',4],['ct8','Demonstração do resultado do exercício (DRE)',4],
+    ['ct9','Lei 6.404/1976, CPC e NBC TSP',2]]},
+  {id:'es', nome:'Estatística', g:'bas', p:3, itens:[
+    ['es1','Estatística descritiva: variáveis, tabelas e gráficos',5],['es2','Medidas de posição (média, mediana, moda)',5],
+    ['es3','Medidas de dispersão, assimetria e curtose',5],['es4','Probabilidade: axiomas, condicional e independência',5],
+    ['es5','Técnicas de amostragem',4],['es6','Variáveis aleatórias e distribuições (binomial, normal)',3],
+    ['es7','Inferência: intervalos de confiança e testes de hipóteses',2],['es8','Correlação e regressão linear',2]]},
   {id:'rl', nome:'Raciocínio Lógico', g:'bas', p:3, itens:[
     ['rl1','Proposições e conectivos',4],['rl2','Negações e equivalências',4],['rl3','Diagramas lógicos',3],
     ['rl4','Argumentação',3],['rl5','Porcentagem e proporção',3],['rl6','Sequências',2],['rl7','Probabilidade',2]]},
@@ -262,7 +273,9 @@ var SUBJ = [
     ['cr1','História e criação do Tocantins',4],['cr2','Geografia',4],['cr3','Economia',3],
     ['cr4','Política e municípios',2],['cr5','Cultura e povos',2]]}
 ];
-var CICLO = ['pp','dp','pt','dc','lpe','inf','adm','dp','pt','pp','rl','lpc','dh','cr'];
+var CICLO = ['pp','dp','pt','dc','lpe','inf','adm','ct','dp','pt','pp','rl','lpc','es','dh','cr'];
+/* Ciclo antigo de 14 blocos (v1) -> posição equivalente no ciclo de 16 (v2). */
+var OLD2NEW = [0,1,2,3,4,5,6,8,9,10,11,12,14,15];
 var FASES = [['Teoria',30],['Questões',20],['Correção',10]];
 var N = CICLO.length, TOTAL = 60*60000, MIN_Q = 15;
 var GRUPO = {jur:'Específica', bas:'Básica'};
@@ -272,17 +285,19 @@ SUBJ.forEach(function(s){ S[s.id]=s; s.itens.forEach(function(it){ NOME[it[0]]=i
 
 /* ---------- Estado ---------- */
 var KEY='ciclo-pcto-v1', TKEY='ciclo-pcto-timer', UKEY='ciclo-pcto-aba';
-function padrao(){ return {v:1, ts:0, pos:1, volta:1, feitos:{pp1:1}, obj:{t:0,q:0}, log:[]}; }
+function padrao(){ return {v:2, ts:0, pos:1, volta:1, feitos:{pp1:1}, obj:{t:0,q:0}, log:[]}; }
 function normalizar(o){
   if(!o || typeof o!=='object') return padrao();
+  var antigo = !(o.v>=2), pos0 = o.pos;
+  if(antigo && Number.isInteger(pos0) && pos0>=0 && pos0<OLD2NEW.length) pos0 = OLD2NEW[pos0];
   return {
-    v:1,
+    v:2,
     ts: Number(o.ts)||0,
-    pos: (Number.isInteger(o.pos) && o.pos>=0 && o.pos<N) ? o.pos : 0,
+    pos: (Number.isInteger(pos0) && pos0>=0 && pos0<N) ? pos0 : 0,
     volta: o.volta>0 ? Math.floor(o.volta) : 1,
     feitos: (o.feitos && typeof o.feitos==='object') ? Object.assign({}, o.feitos) : {},
     obj: {t:(o.obj && o.obj.t)?1:0, q:(o.obj && o.obj.q)?1:0},
-    log: Array.isArray(o.log) ? o.log.slice(-300).map(function(e){ return Object.assign({}, e); }) : []
+    log: Array.isArray(o.log) ? o.log.slice(-300).map(function(e){ var c=Object.assign({}, e); if(antigo && Number.isInteger(c.b) && c.b<OLD2NEW.length) c.b=OLD2NEW[c.b]; return c; }) : []
   };
 }
 function lsGet(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } }
@@ -431,7 +446,7 @@ function telaCiclo(){
     h+='</div>';
   }
   h+='</div></section>';
-  h+='<p class="reset">Terminou o bloco 14? O ciclo volta ao 1. Dia perdido não vira dívida: siga do próximo bloco.</p>';
+  h+='<p class="reset">Terminou o bloco '+N+'? O ciclo volta ao 1. Dia perdido não vira dívida: siga do próximo bloco.</p>';
   return h;
 }
 
@@ -439,8 +454,8 @@ function telaMaterias(){
   var h='<section class="card"><h2>Banca: Cebraspe</h2><p class="note">Contrato assinado em 16/11/2026. Referência mais próxima: Oficial Investigador PC-MA 2026, também do Cebraspe, com múltipla escolha (A a E), sem desconto por erro, e redação de até 30 linhas. O formato da PC-TO só será confirmado no edital.</p></section>'
     +'<section class="card"><h2>Prioridade</h2><dl class="prio">'
     +'<div><dt>Dominar</dt><dd>Direito Penal, Processo Penal, Legislação Penal Especial e Português.</dd></div>'
-    +'<div><dt>Muito importantes</dt><dd>Informática, Constitucional e Administrativo.</dd></div>'
-    +'<div><dt>Complementares</dt><dd>Direitos Humanos, Legislação PC-TO, Conhecimentos Regionais e Raciocínio Lógico.</dd></div>'
+    +'<div><dt>Muito importantes</dt><dd>Informática, Constitucional, Administrativo e Contabilidade.</dd></div>'
+    +'<div><dt>Complementares</dt><dd>Estatística, Direitos Humanos, Legislação PC-TO, Conhecimentos Regionais e Raciocínio Lógico.</dd></div>'
     +'</dl><p class="note legend">'+stars(5)+' importância do conteúdo para a prova, de 1 a 5</p></section>';
   SUBJ.forEach(function(s){
     var f=feitosDe(s.id), t=s.itens.length, ac=acertos(s.id), prox=proximo(s.id,0), aberta=ui.aberta===s.id;
@@ -524,7 +539,7 @@ document.addEventListener('click', function(ev){
   else if(act==='abre'){ var s=b.getAttribute('data-s'); ui.aberta=(ui.aberta===s?null:s); render(); }
   else if(act==='zerar'){ ui.zerar=true; render(); }
   else if(act==='zerar-nao'){ ui.zerar=false; render(); }
-  else if(act==='zerar-sim'){ state={v:1,ts:0,pos:0,volta:1,feitos:{},obj:{t:0,q:0},log:[]}; ui.zerar=false; ui.undo=null; zerarTimer(); ligarTick(); commit(); }
+  else if(act==='zerar-sim'){ state={v:2,ts:0,pos:0,volta:1,feitos:{},obj:{t:0,q:0},log:[]}; ui.zerar=false; ui.undo=null; zerarTimer(); ligarTick(); commit(); }
 });
 document.addEventListener('change', function(ev){
   var ob=ev.target.getAttribute && ev.target.getAttribute('data-obj');
